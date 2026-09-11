@@ -1,5 +1,5 @@
 const BCT_VERSION = "0.6.10";
-const BCT_Settings_Version = 22;
+const BCT_Settings_Version = 23;
 const BCT_CHANGELOG = `${BCT_VERSION}
 - Fixed Room slots for private rooms
 `
@@ -159,6 +159,7 @@ async function runBCT(){
 			},
 			allIconOnlyShowOnHover : false,
 			bctIconOnlyShowOnHover : true,
+			otherAddonIconOnlyShowOnHover : false,
 			showChangelog: true,
 			friendlistSlotsEnabled: true,
 		};
@@ -257,7 +258,7 @@ async function runBCT(){
 		ServerPlayerExtensionSettingsSync("BCT");
 
 		//shared settings
-		for(setting in Player.BCT.bctSettings){
+		for (const setting in Player.BCT.bctSettings) {
 			if(SHARED_SETTINGS.indexOf(setting) >= 0){
 				Player.BCT.bctSharedSettings[setting] = Player.BCT.bctSettings[setting];
 			}
@@ -477,7 +478,7 @@ async function runBCT(){
 		const MENU_ELEMENT_X_OFFSET = 1050;
 
 		let menuElements = {};
-		for (category of bctSettingsCategories){
+		for (const category of bctSettingsCategories) {
 			menuElements[category] = [];
 		}
 
@@ -654,7 +655,7 @@ async function runBCT(){
 			}
 
 			let currentElement;
-			for (i = 0; i < menuElements[BCTPreferenceSubscreen].length; i++){
+			for (let i = 0; i < menuElements[BCTPreferenceSubscreen].length; i++) {
 				currentElement = menuElements[BCTPreferenceSubscreen][i];
 				MainCanvas.textAlign = "left";
 				let textColor = "Black";
@@ -719,7 +720,7 @@ async function runBCT(){
 			}
 			let currentElement;
 			let foundElement = false;
-			for (i = 0; i < menuElements[BCTPreferenceSubscreen].length; i++){
+			for (let i = 0; i < menuElements[BCTPreferenceSubscreen].length; i++) {
 				currentElement = menuElements[BCTPreferenceSubscreen][i];
 				switch (currentElement.type) {
 					case "Checkbox":
@@ -767,20 +768,20 @@ async function runBCT(){
 			currentHint = 0;
 			PreferenceExtensionsCurrent = {
 				Identifier: "BCTSettings",
-				click: PreferenceSubscreenBCTSettingsClick,
-				run: PreferenceSubscreenBCTSettingsRun,
-				exit: PreferenceSubscreenBCTSettingsExit,
-				load: PreferenceSubscreenBCTSettingsLoad,
+				click: window.PreferenceSubscreenBCTSettingsClick,
+				run: window.PreferenceSubscreenBCTSettingsRun,
+				exit: window.PreferenceSubscreenBCTSettingsExit,
+				load: window.PreferenceSubscreenBCTSettingsLoad,
 			}
-            PreferenceSubscreenBCTSettingsLoad();
+			window.PreferenceSubscreenBCTSettingsLoad();
 		}
 
 
-		PreferenceSubscreenBCTSettingsLoad = function () {
+		window.PreferenceSubscreenBCTSettingsLoad = function () {
 			currentPageNumber = 0;
 		};
 
-		PreferenceSubscreenBCTSettingsRun = function () {
+		window.PreferenceSubscreenBCTSettingsRun = function () {
 
 			// Draw the player & controls
 			DrawCharacter(Player, 50, 50, 0.9);
@@ -819,15 +820,15 @@ async function runBCT(){
 				BCTPreferenceSubscreen = "Reset";
 				PreferencePageCurrent = 1;
 		}
-		PreferenceSubscreenResetLoad = function () {
+		window.PreferenceSubscreenResetLoad = function () {
 			currentPageNumber = 1;
 		}
-		PreferenceSubscreenResetRun = function () {
+		window.PreferenceSubscreenResetRun = function () {
 			DrawTextWrapGood("Do you want to reset all settings to Defaults?",1000, 200, 800, 100, BCT_API.HintForeColor);
 			DrawButton(400, 650, 300, 100, "Confirm", "Red","","Confirm Reset and Exit");
 			DrawButton(1300, 650, 300, 100, "Cancel","White","","Cancel Reset");
 		}
-		PreferenceSubscreenResetClick = function () {
+		window.PreferenceSubscreenResetClick = function () {
 			if (MouseIn(400, 650, 300, 100)) {
 				bctSettingsLoad(true);
 				defaultExit();
@@ -836,14 +837,14 @@ async function runBCT(){
 				defaultExit();
 			}
 		}
-		PreferenceSubscreenResetExit = function () {
+		window.PreferenceSubscreenResetExit = function () {
 			defaultExit();
 		}
 
-		PreferenceSubscreenBCTSettingsClick = function () {
+		window.PreferenceSubscreenBCTSettingsClick = function () {
 
 			// Exit button
-			if (MouseIn(1815, 75, 90, 90)) PreferenceSubscreenBCTSettingsExit();
+			if (MouseIn(1815, 75, 90, 90)) window.PreferenceSubscreenBCTSettingsExit();
 			if (MouseIn(1450, 650, 400, 90)) window.open("https://github.com/Pets94//blob/main/extension/Changelog.md", "_blank");
 			if (MouseIn(1450, 755, 400, 90)) window.open("https://github.com/Pets94/BCTweaksSerra/blob/beta/extension/Changelog.md", "_blank");
 			if (MouseIn(1500, 860, 300, 90)) resetSettings();
@@ -868,14 +869,14 @@ async function runBCT(){
 			}
 		}
 
-		PreferenceSubscreenBCTSettingsExit = function () {
+		window.PreferenceSubscreenBCTSettingsExit = function () {
 			bctSettingsSave();
 			BCTPreferenceSubscreen = "";
 			PreferenceMessage = "";
 			PreferenceSubscreenExtensionsClear();
 		};
 
-		PreferenceSubscreenBCTArousalLoad = function () {
+		window.PreferenceSubscreenBCTArousalLoad = function () {
 			BCTPreferenceSubscreen = "BCTArousal";
 			addMenuInput(200, "Arousal Progress Multiplier:", "arousalProgressMultiplier", "InputArousalProgressMultiplier",
 			"Sets a multiplier for the arousal progress. E.g. if an activity would normally result in a progress of 10%, " +
@@ -916,15 +917,15 @@ async function runBCT(){
 			);
 		}
 
-		PreferenceSubscreenBCTArousalRun = function () {
+		window.PreferenceSubscreenBCTArousalRun = function () {
 			drawMenuElements();
 		}
 
-		PreferenceSubscreenBCTArousalClick = function () {
+		window.PreferenceSubscreenBCTArousalClick = function () {
 			handleMenuClicks();
 		}
 
-		PreferenceSubscreenBCTArousalExit = function () {
+		window.PreferenceSubscreenBCTArousalExit = function () {
 			if(CommonIsNumeric(ElementValue("InputArousalProgressMultiplier"))
 				&& CommonIsNumeric(ElementValue("InputOrgasmProgressMultiplier"))
 				&& CommonIsNumeric(ElementValue("InputArousalDecayMultiplier"))
@@ -947,7 +948,7 @@ async function runBCT(){
 			// Unzoom all arousal bars on changing to setting the arousal bar to "Bottom", to prevent both bars being zoomed
 			// and thus none of the bars being shown
 			if (Player.BCT.bctSettings.arousalbarLocation === "Bottom"){
-				for (char of Character){
+				for (const char of Character) {
 					if(char.BCT?.splitOrgasmArousal?.arousalZoom) char.BCT.splitOrgasmArousal.arousalZoom = false;
 				}
 			}
@@ -956,7 +957,7 @@ async function runBCT(){
 		let tailPreviewMain;
 		let tailPreviewSecondary;
 
-		PreferenceSubscreenBCTTailwagLoad = function () {
+		window.PreferenceSubscreenBCTTailwagLoad = function () {
 			BCTPreferenceSubscreen = "BCTTailwag";
 			addMenuCheckbox(64, 64, "Enable Tail Wagging:", "tailWaggingEnable",
 			"Enables tail wagging upon sending emotes like \"*wags her tail\" or \"*'s tail is wagging\"."
@@ -1005,7 +1006,7 @@ async function runBCT(){
 			CharacterRefresh(tailPreviewSecondary);
 		}
 
-		PreferenceSubscreenBCTTailwagRun = function () {
+		window.PreferenceSubscreenBCTTailwagRun = function () {
 			drawMenuElements();
 			MainCanvas.textAlign = "center";
 			DrawTextWrapGood("Main Tail:", 550, 750, 100, 80, BCT_API.HintForeColor);
@@ -1014,11 +1015,11 @@ async function runBCT(){
 			DrawCharacter(tailPreviewSecondary, 1100, 600, 0.5, false);
 		}
 
-		PreferenceSubscreenBCTTailwagClick = function () {
+		window.PreferenceSubscreenBCTTailwagClick = function () {
 			handleMenuClicks();
 		}
 
-		PreferenceSubscreenBCTTailwagExit = function () {
+		window.PreferenceSubscreenBCTTailwagExit = function () {
 			if(CommonIsNumeric(ElementValue("InputTailWaggingCount"))
 				&& CommonIsNumeric(ElementValue("InputTailWaggingDelay"))){
 				Player.BCT.bctSettings.tailWaggingCount = parseInt(ElementValue("InputTailWaggingCount"));
@@ -1030,13 +1031,16 @@ async function runBCT(){
 			else PreferenceMessage = "Put a valid number"
 		};
 
-		PreferenceSubscreenBCTTweaksLoad = function () {
+		window.PreferenceSubscreenBCTTweaksLoad = function () {
 			BCTPreferenceSubscreen = "BCTTweaks";
 			addMenuCheckbox(64, 64, "Show BCT Icon on hover: ", "bctIconOnlyShowOnHover",
 			"BCTweaks overlay icon (the ones that show above a character in chatroom) would only show when the mouse hovers above the character. Otherwise it will be hidden."
 			);
 			addMenuCheckbox(64, 64, "Show Base BC Icon on hover: ", "allIconOnlyShowOnHover",
 			"Base BC's overlay icons would only show when the mouse hovers above the character. Otherwise it will be hidden. Reduces the icon clutter without losing functionality."
+			);
+			addMenuCheckbox(64, 64, "Show Other Addon Icons on hover: ", "otherAddonIconOnlyShowOnHover",
+			"Overlay icons added through BC's character status renderer, including WCE, Echo Activity, and Echo Clothing, only show while the icon area is hovered."
 			);
 			addMenuCheckbox(64, 64, "Show Changelog on Update: ", "showChangelog",
 			"Show the newest changes in your chat the first time you join a room after an update. You can always show them by typing /bctweaks-changelog"
@@ -1047,19 +1051,19 @@ async function runBCT(){
 
 		}
 
-		PreferenceSubscreenBCTTweaksRun = function () {
+		window.PreferenceSubscreenBCTTweaksRun = function () {
 			drawMenuElements();
 		}
 
-		PreferenceSubscreenBCTTweaksClick = function () {
+		window.PreferenceSubscreenBCTTweaksClick = function () {
 			handleMenuClicks();
 		}
 
-		PreferenceSubscreenBCTTweaksExit = function () {
+		window.PreferenceSubscreenBCTTweaksExit = function () {
 			defaultExit();
 		};
 
-		PreferenceSubscreenBCTBestFriendsLoad = function () {
+		window.PreferenceSubscreenBCTBestFriendsLoad = function () {
 			BCTPreferenceSubscreen = "BCTBestFriends";
 			addMenuCheckbox(64,64,"Enable Best Friends Feature:","bestFriendsEnabled",
 			`This feature allows you to add someone as a "Best Friend".
@@ -1087,13 +1091,13 @@ Input should be comma separated Member IDs. (Maximum 30 members)`
 			"Use this instead of regular item permissions."
 			);
 		}
-		PreferenceSubscreenBCTBestFriendsRun = function () {
+		window.PreferenceSubscreenBCTBestFriendsRun = function () {
 			drawMenuElements();
 		}
-		PreferenceSubscreenBCTBestFriendsClick = function () {
+		window.PreferenceSubscreenBCTBestFriendsClick = function () {
 			handleMenuClicks();
 		}
-		PreferenceSubscreenBCTBestFriendsExit = function () {
+		window.PreferenceSubscreenBCTBestFriendsExit = function () {
 			//Filter for item permissions of locks
 			FilterItemPermissions();
 			//Add perms
@@ -1137,10 +1141,10 @@ Input should be comma separated Member IDs. (Maximum 30 members)`
 				Identifier: "BCTSettings",
 				ButtonText: "BCTweaks Settings",
 				Image: IMAGES.LOGO,
-				click: PreferenceSubscreenBCTSettingsClick,
-				run: PreferenceSubscreenBCTSettingsRun,
-				exit: PreferenceSubscreenBCTSettingsExit,
-				load: PreferenceSubscreenBCTSettingsLoad,
+				click: window.PreferenceSubscreenBCTSettingsClick,
+				run: window.PreferenceSubscreenBCTSettingsRun,
+				exit: window.PreferenceSubscreenBCTSettingsExit,
+				load: window.PreferenceSubscreenBCTSettingsLoad,
 			});
 	}
 
@@ -1161,10 +1165,26 @@ Input should be comma separated Member IDs. (Maximum 30 members)`
 	setInterval(addEverySec, 1000);
 	setInterval(addEveryTs, 3000);
 
-	// Hide the base BC status icons unless their icon area is hovered.
-	// Hooking the icon function avoids relying on an exact source-code string,
-	// which broke when BC replaced the numeric state with ChatRoomHideIconStateType.
-	modAPI.hookFunction("ChatRoomDrawCharacterStatusIcons", 2, (args, next) => {
+	const BCT_ADDON_ICON_HOOK_PRIORITY = 1000;
+	const BCT_BASE_ICON_HOOK_PRIORITY = -1000;
+
+	// WCE and both Echo extensions add their overlays by hooking this function.
+	// Run before them so their overlays can be skipped without also hiding BC's
+	// own icons when the two settings are configured differently.
+	modAPI.hookFunction("ChatRoomDrawCharacterStatusIcons", BCT_ADDON_ICON_HOOK_PRIORITY, (args, next) => {
+		const [, CharX, CharY, Zoom] = args;
+		const hoveringIcons = MouseHovering(CharX, CharY, 500 * Zoom, 70 * Zoom);
+
+		if (Player.BCT.bctSettings.otherAddonIconOnlyShowOnHover && !hoveringIcons) {
+			if (Player.BCT.bctSettings.allIconOnlyShowOnHover) return;
+			// Draw BC's original icons while bypassing other add-ons' hooks.
+			return modAPI.callOriginal("ChatRoomDrawCharacterStatusIcons", args);
+		}
+		return next(args);
+	});
+
+	// Run after add-on hooks so hiding base icons alone does not hide add-on icons.
+	modAPI.hookFunction("ChatRoomDrawCharacterStatusIcons", BCT_BASE_ICON_HOOK_PRIORITY, (args, next) => {
 		const [, CharX, CharY, Zoom] = args;
 		if (Player.BCT.bctSettings.allIconOnlyShowOnHover
 		&& !MouseHovering(CharX, CharY, 500 * Zoom, 70 * Zoom)) {
@@ -1765,11 +1785,11 @@ Input should be comma separated Member IDs. (Maximum 30 members)`
 				}
 				next(args);
 				// restore Values
-				for (value in restoreValues){
+				for (const value in restoreValues) {
 					let char = ChatRoomCharacter.find(function(char){
 						return char.ID == value;
 					});
-					for (zone in restoreValues[value]){
+					for (const zone in restoreValues[value]) {
 						PreferenceSetArousalZone(char, zone, restoreValues[value][zone]);
 					}
 				}
@@ -1954,13 +1974,13 @@ Input should be comma separated Member IDs. (Maximum 30 members)`
 
 	// Best Friend Feature start
 
-	ChatRoomCanAddAsBF = () => {
+	window.ChatRoomCanAddAsBF = () => {
 		return (CurrentCharacter && CurrentCharacter.MemberNumber && Player.FriendList.includes(CurrentCharacter.MemberNumber)
 			&& !(Player.Lovership.some(lover => lover.MemberNumber == CurrentCharacter.MemberNumber))
 			&& Player.BCT.bctSettings.bestFriendsEnabled && !Player.BCT.bctSettings.bestFriendsList.includes(CurrentCharacter.MemberNumber));
 	};
 
-	ChatRoomCanRemoveAsBF = () => {
+	window.ChatRoomCanRemoveAsBF = () => {
 		return (CurrentCharacter && CurrentCharacter.MemberNumber
 			&& Player.BCT.bctSettings.bestFriendsEnabled && Player.BCT.bctSettings.bestFriendsList.includes(CurrentCharacter.MemberNumber));
 	};
