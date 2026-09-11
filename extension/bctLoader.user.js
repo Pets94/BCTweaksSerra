@@ -17,6 +17,6 @@
 (function() {
     'use strict';
     var script = document.createElement("script");
-    script.src = "https://Pets94.github.io/BCTweaks/extension/bct.js";
+    script.src = "https://Pets94.github.io/BCTweaksSerra/extension/bct.js";
     document.head.appendChild(script);
 })();
