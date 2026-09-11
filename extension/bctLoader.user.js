@@ -3,8 +3,8 @@
 // @namespace    https://www.bondageprojects.com/
 // @version      1
 // @description  BC extension adding several little useful tweaks to BC.
-// @author       agicitag
-// @downloadURL  https://github.com/agicitag/BCTweaks/raw/main/extension/bctLoader.user.js
+// @author       agicitag, Serra, Petra
+// @downloadURL  https://github.com/Pets94/BCTweaksSerra/raw/main/extension/bctLoader.user.js
 // @match https://bondageprojects.elementfx.com/*
 // @match https://www.bondageprojects.elementfx.com/*
 // @match https://bondage-europe.com/*
@@ -17,6 +17,6 @@
 (function() {
     'use strict';
     var script = document.createElement("script");
-    script.src = "https://Pets94.github.io/BCTweaks/extension/bct.js";
+    script.src = "https://Pets94.github.io/BCTweaksSerra/extension/bct.js";
     document.head.appendChild(script);
 })();
