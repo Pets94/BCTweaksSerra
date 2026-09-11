@@ -35,7 +35,7 @@ async function runBCT(){
 		name: 'BCTweaks',
 		fullName: 'Bondage Club Tweaks',
 		version: BCT_VERSION,
-		repository: 'https://github.com/agicitag/BCTweaks'
+		repository: 'https://github.com/Pets94/BCTweaksSerra'
 	});
 
 	const BCT_MSG = "bctMsg",
@@ -844,8 +844,8 @@ async function runBCT(){
 
 			// Exit button
 			if (MouseIn(1815, 75, 90, 90)) PreferenceSubscreenBCTSettingsExit();
-			if (MouseIn(1450, 650, 400, 90)) window.open("https://github.com/agicitag/BCTweaks/blob/main/extension/Changelog.md", "_blank");
-			if (MouseIn(1450, 755, 400, 90)) window.open("https://github.com/agicitag/BCTweaks/blob/beta/extension/Changelog.md", "_blank");
+			if (MouseIn(1450, 650, 400, 90)) window.open("https://github.com/Pets94//blob/main/extension/Changelog.md", "_blank");
+			if (MouseIn(1450, 755, 400, 90)) window.open("https://github.com/Pets94/BCTweaksSerra/blob/beta/extension/Changelog.md", "_blank");
 			if (MouseIn(1500, 860, 300, 90)) resetSettings();
 			// Open the selected subscreen
 			for (let A = 0; A < bctSettingsCategories.length; A++){
